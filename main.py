@@ -30,7 +30,7 @@ def main(args):
                          logger=logger)
 
     # Train
-    trainer.fit(ltbc, dm)
+    trainer.fit(model, dm)
 
 
 if __name__ ==  '__main__':
