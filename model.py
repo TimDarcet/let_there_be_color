@@ -142,13 +142,14 @@ class Classifier(nn.Module):
         return o
 
 class LTBC(pl.LightningModule):
-    def __init__(self, alpha, rightsize=False, classify=True):
+    def __init__(self, alpha, lr=0.0001, rightsize=False, classify=True):
         super().__init__()
         self.save_hyperparameters()
 
         self.rightsize = rightsize
         self.classify = classify
         self.alpha = alpha
+        self.lr = lr
 
         self.low = LowFeatures()
         self.mid = MidFeatures()
@@ -180,8 +181,8 @@ class LTBC(pl.LightningModule):
 
     def configure_optimizers(self):
         # No further info about optimizer was provided in the paper, we only know it was adadelta
-        optim = torch.optim.Adadelta(self.parameters(), lr=1)
-        #optim = torch.optim.Adam(self.parameters(),lr=0.0001)
+        # optim = torch.optim.Adadelta(self.parameters(), lr=1)
+        optim = torch.optim.Adam(self.parameters(), lr=self.lr)
         return optim
 
     def training_step(self, batch, batch_idx):

@@ -18,7 +18,7 @@ def main(args):
     dm = places365DataModule(args.data_folder, batch_size=args.batch_size)
 
     # Define model
-    model = LTBC(alpha=args.alpha, rightsize=True, classify=True)
+    model = LTBC(alpha=args.alpha, lr=args.lr, rightsize=True, classify=True)
 
     # Exp logger
     logger = TensorBoardLogger('logs/tensorboard_logs')
@@ -41,7 +41,10 @@ if __name__ ==  '__main__':
     parser.add_argument('--n_nodes', type=int, default=2)
     parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--batch_size', type=int, default=32)
+
     parser.add_argument('--alpha', type=float, default=0.005)
+    parser.add_argument('--lr', type=float, default=0.0001)
+
     parser.add_argument('--data_folder', type=str, default="../places365_standard")
     args = parser.parse_args()
     main(args)
