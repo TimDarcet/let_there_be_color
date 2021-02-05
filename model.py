@@ -132,8 +132,8 @@ class Colorizer(nn.Module):
 class Classifier(nn.Module):
     def __init__(self, nclasses=365): #365 or 285 ?
         super().__init__()
-        self.fc1 = FCModule(512, 256)
-        self.fc2 = FCModule(256, nclasses,nonlinearity=nn.Identity())
+        self.fc1 = FCModule(512, 400)
+        self.fc2 = FCModule(400, nclasses,nonlinearity=nn.Identity())
 
     def forward(self, x):
         h = self.fc1(x)
