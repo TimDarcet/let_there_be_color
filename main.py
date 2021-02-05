@@ -26,7 +26,7 @@ def main(args):
     # Define training
     trainer = pl.Trainer(gpus=1,
                          num_nodes=args.n_nodes,
-                         accelerator='ddp'
+                         accelerator='ddp',
                          auto_select_gpus=True,
                          max_epochs=args.epochs,
                          callbacks=[ModelCheckpoint(monitor='val_loss')],
