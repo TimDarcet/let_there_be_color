@@ -1,10 +1,25 @@
+#!/bin/bash -l
+
 # SLURM SUBMIT SCRIPT
-#SBATCH --gres=gpu:8
-#SBATCH --nodes=10
-#SBATCH --ntasks-per-node=8
+#SBATCH --nodes=2
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1
 #SBATCH --mem=0
-#SBATCH --time=02:00:00
+#SBATCH --time=0-02:00:00
+
 # activate conda env
-conda activate my_env  
+conda activate pytorch
+
+# debugging flags (optional)
+export NCCL_DEBUG=INFO
+export PYTHONFAULTHANDLER=1
+
+# on your cluster you might need these:
+# set the network interface
+# export NCCL_SOCKET_IFNAME=^docker0,lo
+
+# might need the latest CUDA
+# module load NCCL/2.4.7-1-cuda.10.0
+
 # run script from above
-python my_test_script_above.py
+srun python3 train.py
