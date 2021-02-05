@@ -62,10 +62,22 @@ class places365DataModule(pl.LightningDataModule):
             self.test_dataset = torchvision.datasets.ImageFolder(root=self.test_path, transform=self.test_transform)
 
     def train_dataloader(self):
-        return torch.utils.data.DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
+        return torch.utils.data.DataLoader(self.train_dataset,
+                                           batch_size=self.batch_size,
+                                           shuffle=True,
+                                           num_workers=8,
+                                           pin_memory=True)
 
     def val_dataloader(self):
-        return torch.utils.data.DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=False)
-    
+        return torch.utils.data.DataLoader(self.val_dataset,
+                                           batch_size=self.batch_size,
+                                           shuffle=True,
+                                           num_workers=8,
+                                           pin_memory=True)
+
     def test_dataloader(self):
-        return torch.utils.data.DataLoader(self.test_dataset, batch_size=self.batch_size, shuffle=True)
+        return torch.utils.data.DataLoader(self.test_dataset,
+                                           batch_size=self.batch_size,
+                                           shuffle=True,
+                                           num_workers=8,
+                                           pin_memory=True)
