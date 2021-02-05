@@ -1,17 +1,21 @@
 from model import CoolModel
 from pytorch_lightning import Trainer
 from test_tube import Experiment
+#from data import MNISTDataModule
+from pl_bolts.datamodules.mnist_datamodule import MNISTDataModule
+import os
+
 
 def main():
     model = CoolModel()
-    exp = Experiment(save_dir=os.getcwd())
     
     # train on 80 GPUs across 10 nodes
-    trainer = Trainer(experiment=exp, 
-                      max_nb_epochs=1, 
-                      gpus=[0,], 
-                      nb_gpu_nodes=10)
-    trainer.fit(model)
-  
+    trainer = Trainer(max_epochs=1,
+                      gpus=0,
+                      num_nodes=1)
+#                      accelerator='ddp')
+    trainer.fit(model, MNISTDataModule(os.getcwd()))
+
+
 if __name__ ==  '__main__':
     main()
