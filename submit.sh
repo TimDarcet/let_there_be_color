@@ -13,7 +13,7 @@ do
     if (($rank >= $n_nodes)); then
         break
     fi
-    ssh -oStrictHostKeyChecking=no $c "who > ~/timothee/tmp"
+    ssh -oStrictHostKeyChecking=no $i "who > ~/timothee/tmp"
     if (($(cat ~/timothee/tmp | wc -l) > 0)); then
         continue
     fi
