@@ -30,7 +30,7 @@ class FCModule(nn.Module):
 
     def forward(self, x):
         h = self.fc(x)
-        #h = self.bn(h) 
+        #h = self.bn(h)
         h = self.nonlinearity(h)
         return h
 
