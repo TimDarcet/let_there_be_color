@@ -2,3 +2,4 @@ __pycache__
 default
 lightning_logs
 MNIST
+*.pyc
