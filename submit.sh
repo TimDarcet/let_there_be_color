@@ -12,7 +12,7 @@ for i in $(cat ~/computers_name | tail -n +$offset | head -n $n_nodes)
 do
     rm -f logs/launch_stderr/log.$i
     rm -f logs/launch_stdout/log.$i
-    ssh -oStrictHostKeyChecking=no $i "tmux new-session -d -s imagnum \"cd ~/timothee/imagnum/let_there_be_color && ./launch_worker.sh $master $port $n_nodes $rank >logs/launch_stdout/log.$i 2>logs/launch_stderr/log.$i\"" &
+    ssh -oStrictHostKeyChecking=no $i "tmux new-session -d -s imagnum \"cd ~/timothee/imagnum/let_there_be_color && ./launch_worker.sh $port $master $n_nodes $rank >logs/launch_stdout/log.$i 2>logs/launch_stderr/log.$i\"" &
     echo Launched node $i with rank $rank
     ((rank++))
 done
