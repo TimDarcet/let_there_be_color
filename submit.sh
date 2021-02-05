@@ -1,25 +1,18 @@
-#!/bin/bash -l
+#!/bin/bash
 
-# SLURM SUBMIT SCRIPT
-#SBATCH --nodes=2
-#SBATCH --gres=gpu:1
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem=0
-#SBATCH --time=0-02:00:00
-
-# activate conda env
-conda activate pytorch
-
-# debugging flags (optional)
-export NCCL_DEBUG=INFO
-export PYTHONFAULTHANDLER=1
-
-# on your cluster you might need these:
-# set the network interface
-# export NCCL_SOCKET_IFNAME=^docker0,lo
-
-# might need the latest CUDA
-# module load NCCL/2.4.7-1-cuda.10.0
-
-# run script from above
-srun python3 train.py
+n_nodes=$1
+offset=$2
+echo "Launching $n_nodes nodes"
+rank=0
+mkdir -p logs/launch_stdout
+mkdir -p logs/launch_stderr
+master=$(cat computers_name | tail -n +$offset | head -n 1)
+port=$(shuf -i 2000-65000 -n 1)
+for i in $(cat ~/computers_name | tail -n +$offset | head -n $n_nodes)
+do
+    rm -f logs/launch_stderr/log.$i
+    rm -f logs/launch_stdout/log.$i
+    ssh -oStrictHostKeyChecking=no $i "tmux new-session -d -s imagnum \"cd ~/timothee/imagnum/let_there_be_color && ./launch_worker.sh $master $port $n_nodes $rank >logs/launch_stdout/log.$i 2>logs/launch_stderr/log.$i\"" &
+    echo Launched node $i with rank $rank
+    ((rank++))
+done
