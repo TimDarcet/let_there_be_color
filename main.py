@@ -30,7 +30,8 @@ def main(args):
                          auto_select_gpus=True,
                          max_epochs=args.epochs,
                          callbacks=[ModelCheckpoint(monitor='val_loss')],
-                         logger=logger)
+                         logger=logger,
+                         val_check_interval=0.1)
 
     # Train
     trainer.fit(model, dm)
@@ -39,7 +40,7 @@ def main(args):
 if __name__ ==  '__main__':
     parser = ArgumentParser()
     parser.add_argument('--n_nodes', type=int, default=2)
-    parser.add_argument('--epochs', type=int, default=1)
+    parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--batch_size', type=int, default=32)
 
     parser.add_argument('--alpha', type=float, default=0.005)

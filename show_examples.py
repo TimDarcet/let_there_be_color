@@ -11,7 +11,7 @@ if from_checkpoint:
 
 ## Select new images
 data_folder = '../places365_standard/'
-dm = places365DataModule(data_folder)
+dm = places365DataModule(data_folder, batch_size=1)
 dm.setup(stage='test')
 
 ## Retrieve a visualizable RGB Image using a LAB image (from the dataset or network output)
