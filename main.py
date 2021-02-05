@@ -11,9 +11,10 @@ def main(args):
     
     # train on 80 GPUs across 10 nodes
     trainer = Trainer(max_epochs=1,
-                      gpus=[0],
+                      gpus=1,
                       num_nodes=args.n_nodes,
-                      accelerator='ddp')
+                      accelerator='ddp',
+                      auto_select_gpus=True)
     trainer.fit(model, MNISTDataModule(os.getcwd()))
 
 
