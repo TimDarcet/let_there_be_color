@@ -6,7 +6,7 @@ echo "Launching $n_nodes nodes"
 rank=0
 mkdir -p logs/launch_stdout
 mkdir -p logs/launch_stderr
-master=$(cat ~/computers_name | tail -n +$offset | head -n 1)
+master=$(cat ~/computers_name | tail -n +$offset | head -n 1 | cut -d @ -f 2)
 port=$(shuf -i 2000-65000 -n 1)
 for i in $(cat ~/computers_name | tail -n +$offset | head -n $n_nodes)
 do
