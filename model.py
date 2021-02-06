@@ -235,6 +235,6 @@ class LTBC(pl.LightningModule):
                 three_images= torch.stack([torch.tensor(gt_rgb_image),
                                         torch.tensor(pred_rgb_image),
                                         torch.tensor(color.rgb2gray(pred_rgb_image)).unsqueeze(2).expand(-1, -1, 3)])
-                side_by_side = torchvision.utils.make_grid(three_images.permute(0, 3, 1, 2)).permute(1, 2, 0)
+                side_by_side = torchvision.utils.make_grid(three_images.permute(0, 3, 1, 2))
                 self.logger.experiment.add_image(f'comparison: image {img_idx}', side_by_side, 0)
 
