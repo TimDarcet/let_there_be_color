@@ -34,7 +34,10 @@ def main(args):
                          max_epochs=args.epochs,
                          callbacks=[checkpointer],
                          logger=logger,
-                        #  val_check_interval=0.5,
+                         limit_train_batches=0.2,
+                         limit_val_batches=0.2,
+                         limit_test_batches=0.2,
+                         val_check_interval=0.5,
                          auto_scale_batch_size='binsearch')
 
     # Train
@@ -48,7 +51,7 @@ if __name__ ==  '__main__':
     parser.add_argument('--batch_size', type=int, default=32)
 
     parser.add_argument('--alpha', type=float, default=0.005)
-    parser.add_argument('--lr', type=float, default=0.1)
+    parser.add_argument('--lr', type=float, default=0.005)
 
     parser.add_argument('--data_folder', type=str, default="../places365_standard")
     args = parser.parse_args()
