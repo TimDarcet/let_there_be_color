@@ -8,7 +8,7 @@ import torch.nn as nn
 
 ##Reload a checkpoint if needed
 from_checkpoint = True
-checkpoint = '../weights.ckpt'
+checkpoint = './weights.ckpt'
 
 if from_checkpoint:
     ltbc = LTBC.load_from_checkpoint(checkpoint)
@@ -16,7 +16,7 @@ if from_checkpoint:
 
 ## Select new images
 data_folder = '../places365_standard/'
-dm = places365DataModule(data_folder, batch_size=1)
+dm = places365DataModule(data_folder, batch_size=5)
 dm.setup(stage='test')
 print("set up datamodule")
 

@@ -3,3 +3,4 @@ default
 lightning_logs
 MNIST
 *.pyc
+*.ckpt

@@ -26,14 +26,15 @@ def main(args):
                                    save_top_k=3,
                                    mode='min',
                                    save_last=True,
-                                   filename='epoch{epoch}-val{val_loss:.2f}-train{train_loss:.2f}')
+                                   filename='{epoch}-{val_loss:.2f}-{train_loss:.2f}')
     trainer = pl.Trainer(gpus=1,
                          num_nodes=args.n_nodes,
                          accelerator='ddp',
                          auto_select_gpus=True,
                          max_epochs=args.epochs,
                          callbacks=[checkpointer],
-                         logger=logger)
+                         logger=logger,
+                         auto_scale_batch_size='binsearch')
 #                         val_check_interval=0.3)
 
     # Train
