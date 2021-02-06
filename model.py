@@ -229,7 +229,7 @@ class LTBC(pl.LightningModule):
                 gt_rgb_image = convert_back_to_rgb(gt_Lab_image.detach()[img_idx,:1,:,:], gt_Lab_image.detach()[img_idx,1:,:,:])
 
                 pred_Lab_image = torch.cat([L_image, ab_pred], dim=1)
-                pred_rgb_image = convert_back_torandom_rgb(pred_Lab_image.detach()[img_idx,:1,:,:], pred_Lab_image.detach()[img_idx,1:,:,:])
+                pred_rgb_image = convert_back_to_rgb(pred_Lab_image.detach()[img_idx,:1,:,:], pred_Lab_image.detach()[img_idx,1:,:,:])
                 
                 three_images= torch.stack([torch.tensor(gt_rgb_image),
                                         torch.tensor(pred_rgb_image),
