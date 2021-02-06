@@ -3,6 +3,7 @@ import torch
 from torch import nn as nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
+import torchvision
 from torchvision.datasets import MNIST
 import torchvision.transforms as transforms
 import pytorch_lightning as pl
