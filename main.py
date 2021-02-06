@@ -34,8 +34,8 @@ def main(args):
                          max_epochs=args.epochs,
                          callbacks=[checkpointer],
                          logger=logger,
+                         val_check_interval=0.05,
                          auto_scale_batch_size='binsearch')
-#                         val_check_interval=0.3)
 
     # Train
     trainer.fit(model, dm)
