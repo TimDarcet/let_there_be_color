@@ -215,6 +215,7 @@ class LTBC(pl.LightningModule):
             loss += classif_loss
             self.log('val_classif_loss', classif_loss, prog_bar=True)
         self.log('val_loss', loss, prog_bar=True)
+        self.log_images(L_image, ab_image, pred_ab)
         return loss
 
     def log_images(L_image, ab_image, ab_pred):
