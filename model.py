@@ -218,7 +218,7 @@ class LTBC(pl.LightningModule):
         self.log_images(L_image, ab_image, pred_ab)
         return loss
 
-    def log_images(L_image, ab_image, ab_pred):
+    def log_images(self, L_image, ab_image, ab_pred):
         for img_idx in range(L_image.shape[0]):
             # Log one image out of 10
             if random() > 0.9:
