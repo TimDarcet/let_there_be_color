@@ -222,6 +222,8 @@ class LTBC(pl.LightningModule):
         for img_idx in range(L_image.shape[0]):
             # Log one image out of 10
             if random() > 0.9:
+                L_image = L_image.detach().cpu()
+                ab_image = ab_image.detach().cpu()
                 gt_Lab_image = torch.cat([L_image, ab_image], dim=1)
                 gt_rgb_image = convert_back_to_rgb(gt_Lab_image.detach()[img_idx,:1,:,:], gt_Lab_image.detach()[img_idx,1:,:,:])
 
