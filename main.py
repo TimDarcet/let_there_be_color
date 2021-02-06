@@ -48,7 +48,7 @@ if __name__ ==  '__main__':
     parser.add_argument('--batch_size', type=int, default=32)
 
     parser.add_argument('--alpha', type=float, default=0.005)
-    parser.add_argument('--lr', type=float, default=0.0001)
+    parser.add_argument('--lr', type=float, default=0.1)
 
     parser.add_argument('--data_folder', type=str, default="../places365_standard")
     args = parser.parse_args()

@@ -4,7 +4,8 @@ import numpy as np
 from skimage import color, io
 import torch
 import matplotlib.pyplot as plt
-import torch.nn as nn 
+import torch.nn as nn
+from utils import *
 
 ##Reload a checkpoint if needed
 from_checkpoint = True
@@ -16,19 +17,12 @@ if from_checkpoint:
 
 ## Select new images
 data_folder = '../places365_standard/'
-dm = places365DataModule(data_folder, batch_size=5)
+dm = places365DataModule(data_folder, batch_size=1)
 dm.setup(stage='test')
 print("set up datamodule")
 
 ## Retrieve a visualizable RGB Image using a LAB image (from the dataset or network output)
-def convert_back_to_rgb(L_image,ab_image):
-  L = np.transpose(100.0* L_image.detach().numpy(),(1,2,0))
-  ab = np.transpose(254.0*ab_image.detach().numpy() - 127.0,(1,2,0))
 
-  Lab = np.dstack((L,ab)).astype(np.float64)
-  img = color.lab2rgb(Lab)
-
-  return img
 
 ## Prediction test
 test_dataloader = dm.test_dataloader()

@@ -5,22 +5,8 @@ from torch.utils.data import DataLoader, random_split
 import torchvision
 import torchvision.transforms as transforms
 import pytorch_lightning as pl
+from utils import *
 
-def PILToNumpyRGB(image):
-    image = np.asarray(image)
-    if len(image.shape) < 3:
-        image = color.gray2rgb(image)
-    return image
-
-def RGBToLAB(image):
-    image = color.rgb2lab(image)
-    return image
-
-def NormalizeValues(image):
-    image[:,:,:1] /= 100.0
-    image[:,:,1:] += 128.0 
-    image[:,:,1:] /= 256.0
-    return image.astype(np.float32)
 
 class places365DataModule(pl.LightningDataModule):
     def __init__(self, path, batch_size=32, train_prop=0.8):
@@ -71,11 +57,13 @@ class places365DataModule(pl.LightningDataModule):
     def val_dataloader(self):
         return torch.utils.data.DataLoader(self.val_dataset,
                                            batch_size=self.batch_size,
+                                           shuffle=True,
                                            num_workers=8,
                                            pin_memory=True)
 
     def test_dataloader(self):
         return torch.utils.data.DataLoader(self.test_dataset,
                                            batch_size=self.batch_size,
+                                           shuffle=True,
                                            num_workers=8,
                                            pin_memory=True)

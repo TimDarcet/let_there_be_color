@@ -6,6 +6,9 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 import torchvision.transforms as transforms
 import pytorch_lightning as pl
+from utils import *
+from random import random
+
 
 
 class ConvModule(nn.Module):
@@ -214,4 +217,19 @@ class LTBC(pl.LightningModule):
         self.log('val_loss', loss, prog_bar=True)
         return loss
 
+    def log_images(L_image, ab_image, ab_pred):
+        for img_idx in range(L_image.shape[0]):
+            # Log one image out of 10
+            if random() > 0.9:
+                gt_Lab_image = torch.cat([L_image, ab_image], dim=1)
+                gt_rgb_image = convert_back_to_rgb(gt_Lab_image.detach()[img_idx,:1,:,:], gt_Lab_image.detach()[img_idx,1:,:,:])
+
+                pred_Lab_image = torch.cat([L_image, ab_pred], dim=1)
+                pred_rgb_image = convert_back_torandom_rgb(pred_Lab_image.detach()[img_idx,:1,:,:], pred_Lab_image.detach()[img_idx,1:,:,:])
+                
+                three_images= torch.stack([torch.tensor(gt_rgb_image),
+                                        torch.tensor(pred_rgb_image),
+                                        torch.tensor(color.rgb2gray(pred_rgb_image)).unsqueeze(2).expand(-1, -1, 3)])
+                side_by_side = torchvision.utils.make_grid(three_images.permute(0, 3, 1, 2)).permute(1, 2, 0)
+                self.logger.experiment.add_image(f'comparison: image {img_idx}', side_by_side, 0)
 
