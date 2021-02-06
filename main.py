@@ -11,8 +11,6 @@ from data import places365DataModule
 def main(args):
     # Settings
     pl.seed_everything(42)
-    from_checkpoint = False
-    checkpoint = 'lightning_logs/version_4/checkpoints/epoch=6-step=6390.ckpt'
     
     # Handle the data
     dm = places365DataModule(args.data_folder, batch_size=args.batch_size)
