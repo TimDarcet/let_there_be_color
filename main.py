@@ -22,14 +22,19 @@ def main(args):
     logger = TensorBoardLogger('logs/tensorboard_logs')
 
     # Define training
+    checkpointer = ModelCheckpoint(monitor='val_loss',
+                                   save_top_k=3,
+                                   mode='min',
+                                   save_last=True,
+                                   filename='epoch{epoch}-val{val_loss:.2f}-train{train_loss:.2f}')
     trainer = pl.Trainer(gpus=1,
                          num_nodes=args.n_nodes,
                          accelerator='ddp',
                          auto_select_gpus=True,
                          max_epochs=args.epochs,
-                         callbacks=[ModelCheckpoint(monitor='val_loss')],
-                         logger=logger,
-                         val_check_interval=0.1)
+                         callbacks=[checkpointer],
+                         logger=logger)
+#                         val_check_interval=0.3)
 
     # Train
     trainer.fit(model, dm)
