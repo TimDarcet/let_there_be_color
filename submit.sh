@@ -17,6 +17,9 @@ do
     if (($(cat ~/timothee/tmp | wc -l) > 0)); then
         continue
     fi
+    if (($rank == 0)); then
+        master=$(echo $i | cut -d @ -f 2)
+    fi
     rm -f logs/launch_stderr/log.$i
     rm -f logs/launch_stdout/log.$i
     ssh -oStrictHostKeyChecking=no $i "tmux new-session -d -s imagnum \"cd ~/timothee/imagnum/let_there_be_color && ./launch_worker.sh $port $master $n_nodes $rank >logs/launch_stdout/log.$i 2>logs/launch_stderr/log.$i\"" &
