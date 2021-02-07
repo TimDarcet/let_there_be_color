@@ -34,7 +34,7 @@ def main(args):
                          max_epochs=args.epochs,
                          callbacks=[checkpointer],
                          logger=logger,
-                         limit_train_batches=0.5,
+                         limit_train_batches=0.2,
                          limit_val_batches=0.2,
                          limit_test_batches=0.2,
                          val_check_interval=0.5,
